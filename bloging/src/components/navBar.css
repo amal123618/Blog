@@ -1,0 +1,53 @@
+:root {
+  /* Navbar colors */
+  --navbar-bg: white;
+  --navbar-text: black;
+
+  /* Spacing */
+  --navbar-padding-y: 0.75rem;
+  --navbar-padding-x: 1rem;
+
+  /* Border / shadow */
+  --navbar-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* A reusable “custom” class you can apply to any <Navbar> */
+.navbar-custom {
+  background-color: var(--navbar-bg);
+  color: var(--navbar-text) !important;
+  padding: var(--navbar-padding-y) var(--navbar-padding-x);
+  box-shadow: var(--navbar-shadow);
+}
+
+/* Override the built-in links’ color */
+.navbar-custom .nav-link,
+.navbar-custom .navbar-brand {
+  color: var(--navbar-text) !important;
+}
+
+/* On hover, you could even expose another variable */
+.navbar-custom .nav-link:hover {
+  color: var(--navbar-hover,  #3498db) !important;
+}
+
+
+.logo{
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+  margin-right: 10px;
+}
+
+
+
+logo:hover {
+  transform: scale(1.05);
+}
+
+/* For responsive design */
+@media (max-width: 768px) {
+  .logo {
+    height: 30px;
+  }
+}

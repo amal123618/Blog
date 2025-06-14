@@ -1,0 +1,90 @@
+/* Login.css */
+body {
+  font-family: 'Poppins', sans-serif;
+}
+.login-container {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 40px;
+}
+
+.login-left {
+  flex: 1;
+  text-align: left;
+  padding: 40px;
+}
+
+.login-left h2 {
+  font-size: 3rem;
+  color: #343a40;
+  margin-bottom: 20px;
+}
+
+.login-form {
+  flex: 1;
+  padding: 40px;
+  border-radius: 12px;
+  background: white;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 12px 0;
+  margin-bottom: 30px;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 2px solid #ced4da;
+  background: transparent;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.login-form input:focus {
+  border-bottom: 2px solid #0d6efd;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #0d6efd;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-form button:hover {
+  background-color: #084298;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.register-link {
+  margin-top: 10px;
+  
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .login-left,
+  .login-form {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .login-left {
+    text-align: center;
+  }
+}
