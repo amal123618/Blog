@@ -16,7 +16,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://blog-10-nrph.onrender.com//register/", user);
+      const response = await axios.post("https://blog-10-nrph.onrender.com/register/", user);
       alert('Registration successful');
       console.log(response.data);
       navigate('/login');
