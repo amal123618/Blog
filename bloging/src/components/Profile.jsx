@@ -15,7 +15,7 @@ function Profile() {
 
   const fetchUserProfile = async () => {
     try {
-      const res = await axios.get('http://127.0.0.1:8000/Profile/', {
+      const res = await axios.get('https://blog-10-nrph.onrender.com/Profile/', {
         headers: {
           Authorization: `Bearer ${token}`
         }
