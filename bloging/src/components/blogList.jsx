@@ -12,7 +12,7 @@ function Bloglist() {
   useEffect(() => {
     async function fetchBlogs() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/blogs/');
+        const response = await axios.get('https://blog-10-nrph.onrender.com/blogs/');
         setBlogs(response.data);
         setFilteredBlogs(response.data);
       } catch (error) {
