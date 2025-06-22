@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './blogDetail.css';
+import './BlogDetail.css';
 
 function BlogDetail() {
   const { id } = useParams();
