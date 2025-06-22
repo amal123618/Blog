@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './navBar.css';           // <-- make sure your CSS is imported
+import './navBar.css';          
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
@@ -19,11 +19,11 @@ const AppNavbar = () => {
       expand="lg"
       sticky="top"
       className="navbar-custom"
-      variant="dark"   // keep Bootstrap’s dark variant for built-in toggler/icons
+      variant="dark"   
     >
 
       <Container>
-        <Navbar.Brand as={Link} to="/"><img src="src/assets/blogi.jpg"  className='logo'/></Navbar.Brand>
+        <Navbar.Brand as={Link} to="/"><img src="/blogi.jpg/"  className='logo'/></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">

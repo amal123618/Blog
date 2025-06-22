@@ -15,7 +15,7 @@ function Home() {
 
           </div>
           <div className="image-side">
-            <img src="/src/assets/12.jpg" alt="Biriyani" className="header-img" />
+            <img src="/12.jpg/" alt="Biriyani" className="header-img" />
           </div>
         </div>
       </header>
@@ -24,7 +24,7 @@ function Home() {
       <section className="about-section">
         <h2 className="about-title">About This App</h2>
         <div className="about-content">
-          <img src="src/assets/lap.jpg" alt="Blog about" className="about-image" />
+          <img src="/lap.jpg/" alt="Blog about" className="about-image" />
           <p className="about-text">
             This blog application allows users to read, write, and explore insightful articles from diverse authors.
             It is built with Django and React, offering seamless interaction and dynamic content.
