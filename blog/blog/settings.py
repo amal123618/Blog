@@ -74,6 +74,12 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "https://blog-11-2006.onrender.com",  # Your React frontend domain
 ]
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+    "x-csrftoken",
+    "x-requested-with",
+]
 
 ROOT_URLCONF = 'blog.urls'
 
