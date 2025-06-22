@@ -23,7 +23,7 @@ const AppNavbar = () => {
     >
 
       <Container>
-        <Navbar.Brand as={Link} to="/"><img src="/blogi.jpg/"  className='logo'/></Navbar.Brand>
+        <Navbar.Brand as={Link} to="/"><img src="/blogi.jpg"  className='logo'/></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
