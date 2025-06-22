@@ -12,13 +12,13 @@ from django.contrib.auth import authenticate
 
 
 @api_view(['GET'])
-@permission_classes([])
+@permission_classes([AllowAny])
 def index(request):
     return Response({'message': 'Welcome to the Blog '}, status=status.HTTP_200_OK)
 
 # Register and login views
 @api_view(['POST'])
-@permission_classes([])
+@permission_classes([AllowAny])
 def register(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
@@ -29,7 +29,7 @@ def register(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
 @api_view(['POST'])
-@permission_classes([])
+@permission_classes([AllowAny])
 def login_view(request):
     username = request.data.get('username')
     password = request.data.get('password')
