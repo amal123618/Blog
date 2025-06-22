@@ -9,7 +9,7 @@ function Home() {
       <header className="home-header">
         <div className="header-content">
           <div className="text-content">
-            <h1>Welcome to My Blog App</h1>
+            <h1>Welcome to My Amal Blog App</h1>
             <p>Conversation is king. Content is just something to talk about</p>
             <Link to="/Blogs" className="btn-link">Blogs</Link>
 
