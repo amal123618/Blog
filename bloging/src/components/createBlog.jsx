@@ -16,7 +16,7 @@ function CreateBlog() {
       }
 
       const response = await axios.post(
-        'http://127.0.0.1:8000/create_blog/',
+        'https://blog-10-nrph.onrender.com/create_blog/',
         form,
         {
           headers: {
