@@ -47,8 +47,9 @@ const Login = () => {
       </div>
       <form onSubmit={handleSubmit} className="login-form">
         {message && <p className="error-message">{message}</p>}
-        <input
+       <input
           type="text"
+          name="username"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -56,11 +57,13 @@ const Login = () => {
         />
         <input
           type="password"
+          name="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
         <button type="submit">Login</button>
         <p className="register-link">
           Not registered? <Link to="/register">Create an account</Link>
