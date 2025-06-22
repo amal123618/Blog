@@ -13,10 +13,18 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("https://blog-10-nrph.onrender.com/login/", {
+      const response = await axios.post(
+      "https://blog-10-nrph.onrender.com/login/",
+      {
         username,
         password
-      });
+      },
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
 
       if (response.data.access && response.data.refresh) {
         localStorage.setItem("token", response.data.access);
