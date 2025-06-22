@@ -71,8 +71,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://blog-11-2006.onrender.com",  # Your React frontend domain
+]
 
 ROOT_URLCONF = 'blog.urls'
 
