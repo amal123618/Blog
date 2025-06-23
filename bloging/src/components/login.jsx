@@ -13,11 +13,8 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-      "https://blog-10-nrph.onrender.com/login/",
-      {
-        username,
-        password
+            await axios.post("https://blog-10-nrph.onrender.com/login/", {
+        username, password
       },
       {
         headers: {
