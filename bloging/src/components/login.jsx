@@ -44,33 +44,33 @@ const Login = () => {
         <h2>Login to Your Blog</h2>
         <p>Access your dashboard and manage your blogs.</p>
       </div>
-     <form onSubmit={handleSubmit}>
-       {message && <p className="error-message">{message}</p>}
-          <input
-            type="text"
-            name="username"
-            id="username"
-            autoComplete="username"       // ✅ Required for autofill
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        
-          <input
-            type="password"
-            name="password"
-            id="password"
-            autoComplete="current-password"  // ✅ Required for autofill
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
 
-  <button type="submit">Login</button>
-</form>
+      <form onSubmit={handleSubmit} className="login-form">
+        {message && <p className="error-message">{message}</p>}
 
+        <input
+          type="text"
+          name="username"
+          id="username"
+          autoComplete="username"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+
+        <input
+          type="password"
+          name="password"
+          id="password"
+          autoComplete="current-password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+
+        <button type="submit">Login</button>
 
         <p className="register-link">
           Not registered? <Link to="/register">Create an account</Link>
