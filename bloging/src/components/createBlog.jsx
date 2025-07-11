@@ -1,61 +1,75 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import './CreateBlog.css';
+import React, { useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import './Login.css';
 
-function CreateBlog() {
-  const [form, setForm] = useState({ title: '', content: '' });
+const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        alert('You are not authorized. Please log in.');
-        return;
-      }
-
       const response = await axios.post(
-        'https://blog-10-nrph.onrender.com/create_blog/',
-        form,
+        "https://blog-10-nrph.onrender.com/login/",
+        { username, password },
         {
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            "Content-Type": "application/json"
           }
         }
       );
 
-      alert('Blog created');
-      console.log(response.data);
-      setForm({ title: '', content: '' });
-    } catch (err) {
-      alert('Error creating blog');
-      console.error(err);
+      // ✅ Check if login tokens are present
+      if (response.data.access && response.data.refresh) {
+        localStorage.setItem("token", response.data.access);
+        localStorage.setItem("refreshToken", response.data.refresh);
+        setMessage("Login successful!");
+        navigate("/"); // Redirect to homepage or dashboard
+      } else {
+        setMessage("Invalid login response. Please try again.");
+      }
+    } catch (error) {
+      setMessage(
+        error.response?.data?.error || "Login failed. Please check your credentials."
+      );
     }
   };
 
   return (
-    <div className="create-blog-container">
-      <form onSubmit={handleSubmit} className="create-blog-form">
-        <h2>Create a New Blog</h2>
+    <div className="login-container">
+      <div className="login-left">
+        <h2>Login to Your Blog</h2>
+        <p>Access your dashboard and manage your blogs.</p>
+      </div>
+      <form onSubmit={handleSubmit} className="login-form">
+        {message && <p className="error-message">{message}</p>}
         <input
           type="text"
-          value={form.title}
-          onChange={e => setForm({ ...form, title: e.target.value })}
-          placeholder="Blog Title"
+          name="username"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
-        <textarea
-          value={form.content}
-          onChange={e => setForm({ ...form, content: e.target.value })}
-          placeholder="Write your content here..."
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Publish</button>
+        <button type="submit">Login</button>
+        <p className="register-link">
+          Not registered? <Link to="/register">Create an account</Link>
+        </p>
       </form>
     </div>
   );
-}
+};
 
-export default CreateBlog;
+export default Login;
