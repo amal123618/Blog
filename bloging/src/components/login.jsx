@@ -13,26 +13,28 @@ const Login = () => {
     e.preventDefault();
 
     try {
-            await axios.post("https://blog-10-nrph.onrender.com/login/", {
-        username, password
-      },
-      {
-        headers: {
-          "Content-Type": "application/json"
+      const response = await axios.post(
+        "https://blog-10-nrph.onrender.com/login/",
+        { username, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      }
-    );
+      );
 
       if (response.data.access && response.data.refresh) {
         localStorage.setItem("token", response.data.access);
         localStorage.setItem("refreshToken", response.data.refresh);
         setMessage("Login successful!");
-        navigate("/"); 
+        navigate("/"); // redirect to home or dashboard
       } else {
         setMessage("Invalid login response. Please try again.");
       }
     } catch (error) {
-      setMessage(error.response?.data?.error || "Login failed. Please check your credentials.");
+      setMessage(
+        error.response?.data?.error || "Login failed. Please check your credentials."
+      );
     }
   };
 
@@ -44,24 +46,29 @@ const Login = () => {
       </div>
       <form onSubmit={handleSubmit} className="login-form">
         {message && <p className="error-message">{message}</p>}
-       <input
+
+        <input
           type="text"
           name="username"
           placeholder="Username"
+          autoComplete="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
         />
+
         <input
           type="password"
           name="password"
           placeholder="Password"
+          autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
 
         <button type="submit">Login</button>
+
         <p className="register-link">
           Not registered? <Link to="/register">Create an account</Link>
         </p>
