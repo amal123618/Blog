@@ -10,6 +10,12 @@ from app1.serializers import BlogSerializer, CommentSerializer, UserSerializer
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
+from rest_framework.views import exception_handler
+import traceback
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -28,24 +34,33 @@ def register(request):
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login_view(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
+    try:
+        username = request.data.get('username')
+        password = request.data.get('password')
 
-    if not username or not password:
-        return Response({"error": "Username and password are required"}, status=400)
+        if not username or not password:
+            return Response({"error": "Username and password are required"}, status=400)
 
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        refresh = RefreshToken.for_user(user)
-        return Response({
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        })
-    else:
-        return Response({"error": "Login Failed"})
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            })
+        else:
+            return Response({"error": "Invalid username or password"}, status=401)
+
+    except Exception as e:
+        logger.error(f"[LOGIN ERROR] {str(e)}")
+        traceback.print_exc()
+        return Response({"error": "Server error occurred"}, status=500)
+
 
 
 # Blog creation view (only accessible for authenticated users)
