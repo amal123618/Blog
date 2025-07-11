@@ -1,4 +1,4 @@
-from datetime import timezone
+from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
@@ -72,23 +72,21 @@ def blog_list(request):
 def logout_view(request):
     # Expire the tokens by setting the cookies' max_age to a past date
     response = Response({"message": "Logged out successfully"}, status=200)
-
     # Expire access_token and refresh_token by setting their expiry to the past
     response.delete_cookie('access_token')
     response.delete_cookie('refresh_token')
-
-    # Optionally, if you're using HttpOnly and Secure cookies, add the same settings for them
-    response.delete_cookie('access_token', max_age=0, expires=timezone.now())
-    response.delete_cookie('refresh_token', max_age=0, expires=timezone.now())
-    
     return response
 
 @api_view(['GET'])
 @permission_classes([])
 def blog_detail(request, id):
-    Block = Blog.objects.get(id=id)
-    serializer = BlogSerializer(Block)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    try:
+        blog = Blog.objects.get(id=id)
+    except Blog.DoesNotExist:
+        return Response({"error": "Blog not found"}, status=404)
+
+    serializer = BlogSerializer(blog)
+    return Response(serializer.data, status=200)
     
 
 @api_view(['PUT'])
