@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 import { Link } from 'react-router-dom';
@@ -16,7 +16,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://blog-10-nrph.onrender.com/register/", user);
+      const response = await api.post("/register/", user);
       alert('Registration successful');
       console.log(response.data);
       navigate('/login');

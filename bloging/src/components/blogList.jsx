@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import './Bloglist.css';
 
 function Bloglist() {
@@ -12,7 +12,7 @@ function Bloglist() {
   useEffect(() => {
     async function fetchBlogs() {
       try {
-        const response = await axios.get('https://blog-10-nrph.onrender.com/blogs/');
+        const response = await api.get('/blogs/');
         setBlogs(response.data);
         setFilteredBlogs(response.data);
       } catch (error) {

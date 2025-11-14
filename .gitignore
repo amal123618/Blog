@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+
+# Django
+*.log
+*.pot
+*.py,cover
+
+# SQLite database
+*.sqlite3
+
+# Node
+node_modules/
+dist/
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Vite
+.vite/
+
+# OS/IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

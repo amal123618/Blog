@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import './BlogDetail.css';
 
 function BlogDetail() {
@@ -15,7 +15,6 @@ function BlogDetail() {
   const [showComments, setShowComments] = useState(true);
   const [error, setError] = useState(null);
   
-  const API_BASE_URL = 'https://blog-10-nrph.onrender.com';
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -26,7 +25,7 @@ function BlogDetail() {
   const fetchBlog = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`${API_BASE_URL}/blog/${id}/`);
+      const response = await api.get(`/blog/${id}/`);
       setBlog(response.data);
       setError(null);
     } catch (error) {
@@ -39,9 +38,7 @@ function BlogDetail() {
 
   const fetchComments = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/blog/${id}/comments/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await api.get(`/blog/${id}/comments/`);
       setComments(res.data);
     } catch (err) {
       console.error('Error fetching comments:', err);
@@ -52,10 +49,9 @@ function BlogDetail() {
     if (!newComment.trim()) return;
     
     try {
-      await axios.post(
-        `${API_BASE_URL}/blog/${id}/comments/add/`,
-        { content: newComment },
-        { headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` } }
+      await api.post(
+        `/blog/${id}/comments/add/`,
+        { content: newComment }
       );
       setNewComment('');
       fetchComments();
@@ -68,9 +64,7 @@ function BlogDetail() {
     if (!window.confirm('Delete this comment?')) return;
     
     try {
-      await axios.delete(`${API_BASE_URL}/blog/comments/${commentId}/delete/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.delete(`/blog/comments/${commentId}/delete/`);
       fetchComments();
     } catch (err) {
       console.error('Error deleting comment:', err);
@@ -84,10 +78,9 @@ function BlogDetail() {
 
   const handleUpdateComment = async (commentId) => {
     try {
-      await axios.put(
-        `${API_BASE_URL}/blog/comments/${commentId}/update/`,
-        { content: editedCommentContent },
-        { headers: { Authorization: `Bearer ${token}` } }
+      await api.put(
+        `/blog/comments/${commentId}/update/`,
+        { content: editedCommentContent }
       );
       setEditingCommentId(null);
       setEditedCommentContent('');

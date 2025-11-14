@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import './Profile.css';
 
 function Profile() {
@@ -15,11 +15,7 @@ function Profile() {
 
   const fetchUserProfile = async () => {
     try {
-      const res = await axios.get('https://blog-10-nrph.onrender.com/Profile/', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const res = await api.get('/Profile/');
       setUser(res.data);
     } catch (err) {
       console.error('Error fetching profile:', err);
@@ -35,13 +31,9 @@ function Profile() {
   const handleUpdate = async () => {
     if (!editingBlog) return;
     try {
-      await axios.put(`http://127.0.0.1:8000/update/${editingBlog.id}/`, {
+      await api.put(`/update/${editingBlog.id}/`, {
         title: updatedTitle,
         content: updatedContent
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
       });
       setEditingBlog(null);
       fetchUserProfile();
@@ -53,11 +45,7 @@ function Profile() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this blog?')) return;
     try {
-      await axios.delete(`http://127.0.0.1:8000/delete/${id}/`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      await api.delete(`/delete/${id}/`);
       fetchUserProfile();
     } catch (err) {
       console.error('Error deleting blog:', err);

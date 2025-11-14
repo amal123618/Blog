@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { Link, useNavigate } from "react-router-dom";
 import './Login.css';
 
@@ -13,14 +13,9 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "https://blog-10-nrph.onrender.com/login/",
-        { username, password },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const response = await api.post(
+        "/login/",
+        { username, password }
       );
 
       if (response.data.access && response.data.refresh) {

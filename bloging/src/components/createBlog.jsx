@@ -1,75 +1,60 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import './Login.css';
+import React, { useEffect, useState } from "react";
+import api from "../api";
+import { useNavigate } from "react-router-dom";
+import './CreateBlog.css';
 
-const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+const CreateBlog = () => {
   const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setMessage("");
     try {
-      const response = await axios.post(
-        "https://blog-10-nrph.onrender.com/login/",
-        { username, password },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
-
-      // ✅ Check if login tokens are present
-      if (response.data.access && response.data.refresh) {
-        localStorage.setItem("token", response.data.access);
-        localStorage.setItem("refreshToken", response.data.refresh);
-        setMessage("Login successful!");
-        navigate("/"); // Redirect to homepage or dashboard
-      } else {
-        setMessage("Invalid login response. Please try again.");
-      }
-    } catch (error) {
-      setMessage(
-        error.response?.data?.error || "Login failed. Please check your credentials."
-      );
+      await api.post('/create_blog/', { title, content });
+      navigate('/Blogs');
+    } catch (err) {
+      setMessage(err.response?.data?.error || 'Failed to create blog.');
     }
   };
 
   return (
-    <div className="login-container">
-      <div className="login-left">
-        <h2>Login to Your Blog</h2>
-        <p>Access your dashboard and manage your blogs.</p>
+    <div className="create-blog-container">
+      <div className="create-blog-left">
+        <h2>Create a New Blog</h2>
+        <p>Share your thoughts with the world.</p>
       </div>
-      <form onSubmit={handleSubmit} className="login-form">
+      <form onSubmit={handleSubmit} className="create-blog-form">
         {message && <p className="error-message">{message}</p>}
         <input
           type="text"
-          name="username"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          name="title"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           required
         />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+        <textarea
+          name="content"
+          placeholder="Write your content here..."
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          rows={8}
           required
         />
-        <button type="submit">Login</button>
-        <p className="register-link">
-          Not registered? <Link to="/register">Create an account</Link>
-        </p>
+        <button type="submit">Publish</button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default CreateBlog;
