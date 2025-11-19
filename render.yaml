@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: blog-backend
+    env: python
+    rootDir: blog
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+    startCommand: |
+      gunicorn blog.wsgi:application --preload --workers=2 --timeout 120
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12
+      - key: DEBUG
+        value: "False"
+      # SECRET_KEY should be set in Render Dashboard (do not commit a real value)
+      - key: SECRET_KEY
+        generateValue: true
+      # DATABASE_URL is auto-injected when linked to the database below
+    postDeployCommand: |
+      python manage.py migrate --noinput
+
+  - type: postgres
+    name: blog-postgres
+    plan: free
+    ipAllowList: []
+    databaseName: blog
+    user: blog_user
+
+# After creating both services, add an environment variable on the web service:
+# - key: DATABASE_URL (auto when you connect to this postgres in Render UI)
+# Optionally add ALLOWED_HOSTS or CORS origins in settings if you have a custom domain.
