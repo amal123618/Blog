@@ -14,7 +14,6 @@ from datetime import timedelta
 from pathlib import Path
 
 import os
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,15 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# Use environment variable in production; fallback for local dev only
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-#@5z(2-(42&z9$p8st9dwfvdo4svfmt+6#7xzet*5iuff%%$1e')
+SECRET_KEY = 'django-insecure-#@5z(2-(42&z9$p8st9dwfvdo4svfmt+6#7xzet*5iuff%%$1e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True').lower() in ['1', 'true', 'yes']
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    'blog-10-nrph.onrender.com',
-    '.onrender.com',
     'localhost',
     '127.0.0.1'
 ]
@@ -68,7 +64,6 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,7 +72,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 CORS_ALLOWED_ORIGINS = [
-    "https://blog-11-2006.onrender.com",  # Your React frontend domain
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 CORS_ALLOW_HEADERS = [
     "content-type",
@@ -111,10 +107,10 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(  # reads DATABASE_URL if present
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
@@ -173,5 +169,4 @@ STATIC_URL = '/static/'
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
